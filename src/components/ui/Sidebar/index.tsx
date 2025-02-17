@@ -46,7 +46,7 @@ export default function Sidebar() {
     {
       icon: (
         <Avatar.Root>
-          <Avatar.Fallback name='Segun Adebayo' />
+          <Avatar.Fallback name='computershawn' />
           <Avatar.Image src='/profilepic.png' />
         </Avatar.Root>
       ),
@@ -79,12 +79,7 @@ export default function Sidebar() {
         </ChakraLink>
         <VStack>
           {sidebarItems.map((item) => (
-            <Tooltip
-              key={item.text}
-              content={item.text}
-              // openDelay={500}
-              // closeDelay={100}
-            >
+            <Tooltip key={item.text} content={item.text}>
               <Box
                 w={{ base: 10, md: 'full' }}
                 display='flex'
@@ -112,62 +107,9 @@ export default function Sidebar() {
                 )}
               </Box>
             </Tooltip>
-
-            // <Tooltip key={item.text} content='This is the tooltip content'>
-            //   <Box
-            //     w={{ base: 10, md: 'full' }}
-            //     display='flex'
-            //     // align='center'
-            //     gap={4}
-            //     _hover={{ bg: 'white' }}
-            //     borderRadius={6}
-            //     p={2}
-            //   >
-            //     {item.link ? (
-            //       <ChakraLink asChild>
-            //         <NextLink href={item.link}>
-            //           {item.icon}
-            //           <Text display={{ base: 'none', md: 'block' }}>
-            //             {item.text}
-            //           </Text>
-            //         </NextLink>
-            //       </ChakraLink>
-            //     ) : (
-            //       <>
-            //         {item.icon}
-            //         <Text display={{ base: 'none', md: 'block' }}>
-            //           {item.text}
-            //         </Text>
-            //       </>
-            //     )}
-            //   </Box>
-            // </Tooltip>
-
-            // <>
-            //   <ChakraTooltip.Root key={item.text}>
-            //     <ChakraTooltip.Trigger asChild>
-            //       {item.text}
-            //     </ChakraTooltip.Trigger>
-            //     {/* <Portal disabled={!portalled} container={portalRef}> */}
-            //     <ChakraTooltip.Positioner>
-            //       <ChakraTooltip.Content>
-            //         <ChakraTooltip.Arrow>
-            //           <ChakraTooltip.ArrowTip />
-            //         </ChakraTooltip.Arrow>
-            //         {'i am a tooltip wassup'}
-            //       </ChakraTooltip.Content>
-            //     </ChakraTooltip.Positioner>
-            //     {/* </Portal> */}
-            //   </ChakraTooltip.Root>
-            // </>
           ))}
         </VStack>
       </VStack>
     </Box>
   );
 }
-
-const Blorp = () => {
-  // return <span>yo dawg</span>
-  return <Box>yo dawg</Box>;
-};
