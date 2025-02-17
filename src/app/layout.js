@@ -1,5 +1,6 @@
+import { Provider } from '../components/ui/provider';
+
 import { Geist, Geist_Mono } from 'next/font/google';
-import StyleProvider from './styleProvider';
 import './globals.css';
 
 const geistSans = Geist({
@@ -21,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <StyleProvider>{children}</StyleProvider>
+        <Provider>{children}</Provider>
       </body>
     </html>
   );
