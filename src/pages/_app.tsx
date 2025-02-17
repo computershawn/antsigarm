@@ -1,13 +1,12 @@
-'use client';
-
-import { ChakraProvider, defaultSystem, extendTheme } from '@chakra-ui/react';
+import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
 import { ThemeProvider } from 'next-themes';
+import { AppProps } from 'next/app';
 
-export default function RootLayout(props) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider value={defaultSystem}>
       <ThemeProvider attribute='class' disableTransitionOnChange>
-        {props.children}
+        <Component {...pageProps} />
       </ThemeProvider>
     </ChakraProvider>
   );
