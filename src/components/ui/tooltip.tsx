@@ -11,7 +11,10 @@ type Propers = {
   portalRef?: React.RefObject<HTMLElement | null>;
 };
 
-export const Tooltip = React.forwardRef(function Tooltip(props: Propers, ref: React.Ref<any>) {
+export const Tooltip = React.forwardRef(function Tooltip(
+  props: Propers,
+  ref: React.Ref<any>
+) {
   const {
     showArrow,
     children,

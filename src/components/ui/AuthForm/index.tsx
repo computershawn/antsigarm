@@ -1,15 +1,17 @@
+'use client';
+
+import { useState } from 'react';
+
 import {
   Box,
   Button,
   Center,
-  Flex,
   Image,
   Input,
   Text,
   VStack,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 export default function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);

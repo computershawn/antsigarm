@@ -1,15 +1,18 @@
 'use client';
 
+import { type ReactNode } from 'react';
+
 import NextLink from 'next/link';
 
 import {
   Avatar,
   Box,
   Link as ChakraLink,
+  Flex,
+  Icon,
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { AiFillHome } from 'react-icons/ai';
 
 import { Tooltip } from '../tooltip';
 
@@ -17,24 +20,23 @@ import {
   CreatePostLogo,
   InstagramLogo,
   InstagramMobileLogo,
-  NotificationsLogo,
-  SearchLogo,
 } from '../../../assets/constants';
 
 export default function Sidebar() {
+  // TODO: UPDATE THESE ICONS
   const sidebarItems = [
     {
-      icon: <AiFillHome />,
+      icon: <CreatePostLogo />,
       text: 'Home',
       link: '/',
     },
     {
-      icon: <SearchLogo />,
+      icon: <CreatePostLogo />,
       text: 'Search',
       link: '/search',
     },
     {
-      icon: <NotificationsLogo />,
+      icon: <CreatePostLogo />,
       text: 'Notifications',
       link: '/notifications',
     },
@@ -45,7 +47,7 @@ export default function Sidebar() {
     },
     {
       icon: (
-        <Avatar.Root>
+        <Avatar.Root size='2xs'>
           <Avatar.Fallback name='computershawn' />
           <Avatar.Image src='/profilepic.png' />
         </Avatar.Root>
@@ -77,35 +79,37 @@ export default function Sidebar() {
             <InstagramMobileLogo />
           </NextLink>
         </ChakraLink>
-        <VStack>
+        <VStack align='flex-start'>
           {sidebarItems.map((item) => (
-            <Tooltip key={item.text} content={item.text}>
-              <Box
+            <Tooltip
+              key={item.text}
+              content={item.text}
+              showArrow
+              // @ts-expect-error fix this homie
+              positioning={{ placement: 'right' }}
+            >
+              <Flex
                 w={{ base: 10, md: 'full' }}
-                display='flex'
-                gap={4}
                 _hover={{ bg: 'white' }}
                 borderRadius={6}
                 p={2}
               >
                 {item.link ? (
-                  <ChakraLink asChild>
-                    <NextLink href={item.link}>
-                      {item.icon}
-                      <Text display={{ base: 'none', md: 'block' }}>
-                        {item.text}
-                      </Text>
-                    </NextLink>
-                  </ChakraLink>
+                  <ChakraNextLink link={item.link}>
+                    <Icon fontSize='40px'>{item.icon}</Icon>
+                    <Text display={{ base: 'none', md: 'block' }}>
+                      {item.text}
+                    </Text>
+                  </ChakraNextLink>
                 ) : (
-                  <>
+                  <Flex gap={1.5}>
                     {item.icon}
                     <Text display={{ base: 'none', md: 'block' }}>
                       {item.text}
                     </Text>
-                  </>
+                  </Flex>
                 )}
-              </Box>
+              </Flex>
             </Tooltip>
           ))}
         </VStack>
@@ -113,3 +117,17 @@ export default function Sidebar() {
     </Box>
   );
 }
+
+const ChakraNextLink = ({
+  link,
+  children,
+}: {
+  link: string;
+  children: ReactNode;
+}) => {
+  return (
+    <ChakraLink asChild>
+      <NextLink href={link}>{children}</NextLink>
+    </ChakraLink>
+  );
+};
