@@ -9,9 +9,9 @@ export default function ChildLayout({ children }) {
   const W_MED = 240;
 
   return (
-    <HStack bg='tomato'>
+    <HStack bg='#fafafa'>
       {pathname !== 'auth' ? (
-        <Box bg='lightblue' w={{ base: `${W_BASE}px`, md: `${W_MED}px` }}>
+        <Box bg='#f4f4f4' w={{ base: `${W_BASE}px`, md: `${W_MED}px` }}>
           <Sidebar />
         </Box>
       ) : null}

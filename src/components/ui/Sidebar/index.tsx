@@ -1,5 +1,8 @@
 'use client';
 
+// TODO: UPDATE ICONS
+// TODO: FIX MOBILE LOGO LAYOUT
+
 import { type ReactNode } from 'react';
 
 import NextLink from 'next/link';
@@ -17,8 +20,9 @@ import {
 import { Tooltip } from '../tooltip';
 
 import {
-  CreatePostLogo,
-  InstagramLogo,
+  // CreatePostLogo,
+  Square,
+  AntsigarmLogo,
   InstagramMobileLogo,
 } from '../../../assets/constants';
 
@@ -26,22 +30,22 @@ export default function Sidebar() {
   // TODO: UPDATE THESE ICONS
   const sidebarItems = [
     {
-      icon: <CreatePostLogo />,
+      icon: <Square />,
       text: 'Home',
       link: '/',
     },
     {
-      icon: <CreatePostLogo />,
+      icon: <Square />,
       text: 'Search',
       link: '/search',
     },
     {
-      icon: <CreatePostLogo />,
+      icon: <Square />,
       text: 'Notifications',
       link: '/notifications',
     },
     {
-      icon: <CreatePostLogo />,
+      icon: <Square />,
       text: 'Create',
       link: '',
     },
@@ -68,18 +72,25 @@ export default function Sidebar() {
       left={0}
       px={{ base: 2, md: 4 }}
     >
-      <VStack align='flex-start' gap={10} w='full' h='full'>
-        <ChakraLink asChild display={{ base: 'none', md: 'block' }}>
+      <VStack
+        align={{ base: 'center', md: 'flex-start' }}
+        gap={10}
+        w='full'
+        h='full'
+      >
+        <ChakraLink ml='0.5rem' asChild display={{ base: 'none', md: 'block' }}>
           <NextLink href='/'>
-            <InstagramLogo />
+            <AntsigarmLogo />
           </NextLink>
         </ChakraLink>
-        <ChakraLink asChild w={10} display={{ base: 'block', md: 'none' }}>
+
+        <ChakraLink asChild display={{ base: 'block', md: 'none' }}>
           <NextLink href='/'>
             <InstagramMobileLogo />
           </NextLink>
         </ChakraLink>
-        <VStack align='flex-start'>
+
+        <VStack align='flex-start' height='100%'>
           {sidebarItems.map((item) => (
             <Tooltip
               key={item.text}
@@ -112,6 +123,27 @@ export default function Sidebar() {
               </Flex>
             </Tooltip>
           ))}
+          <Tooltip
+            content='Logout'
+            showArrow
+            // @ts-expect-error fix this homie
+            positioning={{ placement: 'right' }}
+          >
+            <Flex
+              w={{ base: 10, md: 'full' }}
+              _hover={{ bg: 'white' }}
+              borderRadius={6}
+              p={2}
+              mt='auto'
+            >
+              <ChakraNextLink link={'/auth'}>
+                <Icon fontSize='40px'>
+                  <Square />
+                </Icon>
+                <Text display={{ base: 'none', md: 'block' }}>Logout</Text>
+              </ChakraNextLink>
+            </Flex>
+          </Tooltip>
         </VStack>
       </VStack>
     </Box>
