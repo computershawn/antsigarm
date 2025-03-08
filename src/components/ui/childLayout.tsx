@@ -1,4 +1,4 @@
-import { Box, HStack } from '@chakra-ui/react';
+import { Box, Flex, HStack } from '@chakra-ui/react';
 import Sidebar from './Sidebar';
 import { usePathname } from 'next/navigation';
 
@@ -9,7 +9,7 @@ export default function ChildLayout({ children }) {
   const W_MED = 240;
 
   return (
-    <HStack bg='#fafafa'>
+    <Flex bg='#fafafa'>
       {pathname !== 'auth' ? (
         <Box bg='#f4f4f4' w={{ base: `${W_BASE}px`, md: `${W_MED}px` }}>
           <Sidebar />
@@ -21,6 +21,6 @@ export default function ChildLayout({ children }) {
       >
         {children}
       </Box>
-    </HStack>
+    </Flex>
   );
 }

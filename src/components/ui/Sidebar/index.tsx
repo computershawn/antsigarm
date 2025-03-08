@@ -3,19 +3,9 @@
 // TODO: UPDATE ICONS
 // TODO: FIX MOBILE LOGO LAYOUT
 
-import { type ReactNode } from 'react';
+import {ChakraNextLink as Link} from '../ChakraNextLink';
 
-import NextLink from 'next/link';
-
-import {
-  Avatar,
-  Box,
-  Link as ChakraLink,
-  Flex,
-  Icon,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Avatar, Box, Flex, Icon, Text, VStack } from '@chakra-ui/react';
 
 import { Tooltip } from '../tooltip';
 
@@ -78,17 +68,17 @@ export default function Sidebar() {
         w='full'
         h='full'
       >
-        <ChakraLink ml='0.5rem' asChild display={{ base: 'none', md: 'block' }}>
-          <NextLink href='/'>
+        <Box ml='0.5rem' display={{ base: 'none', md: 'block' }}>
+          <Link link='/'>
             <AntsigarmLogo />
-          </NextLink>
-        </ChakraLink>
+          </Link>
+        </Box>
 
-        <ChakraLink asChild display={{ base: 'block', md: 'none' }}>
-          <NextLink href='/'>
+        <Box display={{ base: 'block', md: 'none' }}>
+          <Link link='/'>
             <InstagramMobileLogo />
-          </NextLink>
-        </ChakraLink>
+          </Link>
+        </Box>
 
         <VStack align='flex-start' height='100%'>
           {sidebarItems.map((item) => (
@@ -106,12 +96,12 @@ export default function Sidebar() {
                 p={2}
               >
                 {item.link ? (
-                  <ChakraNextLink link={item.link}>
+                  <Link link={item.link}>
                     <Icon fontSize='40px'>{item.icon}</Icon>
                     <Text display={{ base: 'none', md: 'block' }}>
                       {item.text}
                     </Text>
-                  </ChakraNextLink>
+                  </Link>
                 ) : (
                   <Flex gap={1.5}>
                     {item.icon}
@@ -136,12 +126,12 @@ export default function Sidebar() {
               p={2}
               mt='auto'
             >
-              <ChakraNextLink link={'/auth'}>
+              <Link link={'/auth'}>
                 <Icon fontSize='40px'>
                   <Square />
                 </Icon>
                 <Text display={{ base: 'none', md: 'block' }}>Logout</Text>
-              </ChakraNextLink>
+              </Link>
             </Flex>
           </Tooltip>
         </VStack>
@@ -149,17 +139,3 @@ export default function Sidebar() {
     </Box>
   );
 }
-
-const ChakraNextLink = ({
-  link,
-  children,
-}: {
-  link: string;
-  children: ReactNode;
-}) => {
-  return (
-    <ChakraLink asChild>
-      <NextLink href={link}>{children}</NextLink>
-    </ChakraLink>
-  );
-};
