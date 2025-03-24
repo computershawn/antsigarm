@@ -10,7 +10,7 @@ export default function FeedPostList() {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 100000);
+    }, 2000);
   }, []);
 
   const list = [

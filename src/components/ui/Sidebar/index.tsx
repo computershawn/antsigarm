@@ -13,7 +13,7 @@ import {
   // CreatePostLogo,
   Square,
   AntsigarmLogo,
-  InstagramMobileLogo,
+  AntsigarmMobileLogo,
 } from '../../../assets/constants';
 
 export default function Sidebar() {
@@ -76,7 +76,7 @@ export default function Sidebar() {
 
         <Box display={{ base: 'block', md: 'none' }}>
           <Link link='/'>
-            <InstagramMobileLogo />
+            <AntsigarmMobileLogo />
           </Link>
         </Box>
 

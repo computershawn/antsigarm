@@ -34,7 +34,7 @@ export default function SuggestedUserList() {
           fontSize={12}
           fontWeight='700'
           color='gray'
-          _hover={{ color: 'lightgray' }}
+          _hover={{ color: 'darkgray' }}
         >
           See All
         </Text>
