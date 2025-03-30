@@ -1,20 +1,11 @@
 import { useState } from 'react';
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Icon,
-  Input,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Flex, HStack, Icon, Input, Text, VStack } from '@chakra-ui/react';
 
 import { FaRegComment, FaHeart, FaRegHeart } from 'react-icons/fa6';
 
 import { InputGroup } from '../input-group';
 
-export default function PostFooter({ username }) {
+export default function PostFooter({ username, color, isProfilePage }) {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(1000);
 
@@ -31,35 +22,44 @@ export default function PostFooter({ username }) {
   const commentCount = 2468;
 
   return (
-    <VStack mb={12} gap={1} align='flex-start'>
+    <VStack mb={12} gap={1} align='flex-start' mt='auto'>
       <HStack align='center' gap={4} w='full' my={1}>
         <Flex onClick={handleLike} cursor='pointer' gap={1} align='center'>
           <Icon fontSize='2xl'>
-            {!liked ? <FaRegHeart /> : <FaHeart color='#c90202' />}
+            {!liked ? (
+              <FaRegHeart color={color} />
+            ) : (
+              <FaHeart color='#c90202' />
+            )}
           </Icon>
-          <Text fontSize={12} color='#222'>
+          <Text fontSize={12} color={color}>
             {likes}
           </Text>
         </Flex>
         <Flex cursor='pointer' gap={1} align='center'>
           <Icon fontSize='2xl'>
-            <FaRegComment />
+            <FaRegComment color={color} />
           </Icon>
-          <Text fontSize={12} color='#222'>
+          <Text fontSize={12} color={color}>
             {commentCount}
           </Text>
         </Flex>
       </HStack>
-      {/* <Text>{likes} likes</Text> */}
-      <Text fontSize={14} fontWeight='700'>
-        {username}{' '}
-        <Text as='span' fontWeight='400'>
-          Konichiwa Bitches
-        </Text>
-      </Text>
-      <Text fontSize={14} color='gray'>
-        {`View all ${commentCount} comments`}
-      </Text>
+
+      {!isProfilePage && (
+        <>
+          <Text fontSize={14} fontWeight='700'>
+            {username}{' '}
+            <Text as='span' fontWeight='400' color={color}>
+              Konichiwa Bitches
+            </Text>
+          </Text>
+          <Text fontSize={14} color='gray'>
+            {`View all ${commentCount} comments`}
+          </Text>
+        </>
+      )}
+
       <InputGroup
         w='100%'
         endElement={
