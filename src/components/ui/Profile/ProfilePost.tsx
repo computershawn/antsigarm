@@ -1,12 +1,8 @@
 import {
   Box,
-  Button,
-  // DialogRoot as Modal,
-  // DialogTrigger as ModalTrigger,
   Flex,
   GridItem,
   Image,
-  Modal as Modal1,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -16,7 +12,9 @@ import { FaComment } from 'react-icons/fa';
 import {
   DialogBackdrop as ModalOverlay,
   DialogBody as ModalBody,
+  DialogContent as ModalContent,
   DialogHeader as ModalHeader,
+  DialogTrigger as ModalTrigger,
   DialogRoot as Modal,
 } from '../dialog';
 import { Avatar } from '../avatar';
@@ -27,7 +25,7 @@ export default function ProfilePost({ img }) {
 
   return (
     <>
-      <GridItem
+      {/* <GridItem
         cursor='pointer'
         borderRadius={4}
         overflow='hidden'
@@ -70,48 +68,95 @@ export default function ProfilePost({ img }) {
           h='100%'
           objectFit='cover'
         />
-      </GridItem>
+      </GridItem> */}
       <Modal
         open={open}
         onExitComplete={onClose}
         placement='center'
         size={{ base: 'lg', md: 'xl' }}
       >
-        {/* <ModalTrigger asChild>
-        <Button variant="outline" size="sm">
-          Open Dialog
-        </Button>
-      </ModalTrigger> */}
-        <ModalOverlay />
-        <ModalHeader>hello</ModalHeader>
-        <ModalBody bg='black' pb={5}>
-          <Flex gap={4} w={{ base: '90%', sm: '70%', md: 'full' }} mx='auto'>
-            <Box
-              borderRadius={4}
-              overflow='hidden'
-              border='1px solid rgb(191, 191, 191)'
-              flex={1.5}
-            >
-              <Image src={img} alt='profile post' />
-            </Box>
+        <ModalTrigger asChild>
+          <GridItem
+            cursor='pointer'
+            borderRadius={4}
+            overflow='hidden'
+            border='1px solid rgb(191, 191, 191)'
+            position='relative'
+            aspectRatio='square'
+          >
             <Flex
-              flex={1}
-              direction='column'
-              px={10}
-              display={{ base: 'none', md: 'flex' }}
+              opacity={0}
+              _hover={{ opacity: 1 }}
+              position='absolute'
+              top={0}
+              left={0}
+              right={0}
+              bottom={0}
+              bg='rgba(0, 0, 0, 0.7)'
+              transition='all 0.3s ease'
+              zIndex={1}
+              justify='center'
             >
-              <Flex align='center' justify='space-between'>
-                <Avatar src='/profilepic.png' size='sm' name='Shawn J' />
-                <Text fontWeight='bold' fontSize={12}>
-                  computershawn
-                </Text>
+              <Flex align='center' justify='center' gap={50}>
+                <Flex>
+                  <AiFillHeart size={20} fill='white' />
+                  <Text fontWeight='bold' ml={2} color='white'>
+                    24
+                  </Text>
+                </Flex>
+                <Flex>
+                  <FaComment size={20} fill='white' />
+                  <Text fontWeight='bold' ml={2} color='white'>
+                    7
+                  </Text>
+                </Flex>
               </Flex>
-              <Box _hover={{ bg: 'rgba(1, 1, 1, 0.3)', color: 'red' }} borderRadius={4} p={1}>
-                <MdDelete size={20} cursor='pointer' />
-              </Box>
             </Flex>
-          </Flex>
-        </ModalBody>
+            <Image
+              src={img}
+              alt='profile post'
+              w='100%'
+              h='100%'
+              objectFit='cover'
+            />
+          </GridItem>
+        </ModalTrigger>
+        {/* <ModalOverlay bg="rgb(0, 0, 0, 0.5)" /> */}
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalBody bg='black' pb={5}>
+            <Flex gap={4} w={{ base: '90%', sm: '70%', md: 'full' }} mx='auto'>
+              <Box
+                borderRadius={4}
+                overflow='hidden'
+                border='1px solid rgb(191, 191, 191)'
+                flex={1.5}
+              >
+                <Image src={img} alt='profile post' />
+              </Box>
+              <Flex
+                flex={1}
+                direction='column'
+                px={10}
+                display={{ base: 'none', md: 'flex' }}
+              >
+                <Flex align='center' justify='space-between'>
+                  <Avatar src='/profilepic.png' size='sm' name='Shawn J' />
+                  <Text fontWeight='bold' fontSize={12}>
+                    computershawn
+                  </Text>
+                </Flex>
+                <Box
+                  _hover={{ bg: 'rgba(1, 1, 1, 0.3)', color: 'red' }}
+                  borderRadius={4}
+                  p={1}
+                >
+                  <MdDelete size={20} cursor='pointer' />
+                </Box>
+              </Flex>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
       </Modal>
     </>
   );
