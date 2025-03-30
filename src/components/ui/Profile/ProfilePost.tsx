@@ -131,21 +131,6 @@ export default function ProfilePost({ img }) {
                           align='start'
                           maxH='350px'
                           overflowY='auto'
-                          // TODO: Apply this scrollbar styling to the whole app
-                          css={{
-                            '&::-webkit-scrollbar': {
-                              width: '10px',
-                            },
-                            '&::-webkit-scrollbar-track': {
-                              background: '#1e1e24',
-                            },
-                            '&::-webkit-scrollbar-thumb': {
-                              background: '#3f3f40',
-                            },
-                            '&::-webkit-scrollbar-thumb: hover': {
-                              background: '#555',
-                            },
-                          }}
                         >
                           {new Array(10).fill(0).map((_, idx) => (
                             <Comment

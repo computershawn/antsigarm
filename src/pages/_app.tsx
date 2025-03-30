@@ -6,6 +6,8 @@ import { ThemeProvider } from 'next-themes';
 
 import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
 
+import { system } from '../theme';
+
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
@@ -14,11 +16,16 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
+const hellaSystem = {
+  ...defaultSystem,
+  ...system,
+};
+
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <ChakraProvider value={defaultSystem}>
+    <ChakraProvider value={hellaSystem}>
       <ThemeProvider attribute='class' disableTransitionOnChange>
         {getLayout(<Component {...pageProps} />)}
       </ThemeProvider>
