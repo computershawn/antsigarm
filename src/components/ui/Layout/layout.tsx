@@ -30,8 +30,11 @@ export default function Layout({ children }) {
       {shouldRenderNavbar ? <Navbar /> : null}
       <Box
         flex={1}
-        mx="auto"
-        w={{ base: `calc(100% - ${W_BASE}px)`, md: `calc(100% - ${W_MED}px)` }}
+        mx='auto'
+        w={{
+          base: `calc(100% - ${W_BASE}px)`,
+          md: `calc(100% - ${W_MED}px)`,
+        }}
       >
         {children}
       </Box>

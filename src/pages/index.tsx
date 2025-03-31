@@ -20,26 +20,30 @@ export default function Home() {
     }
   }, [authUser, router]);
 
-  return (
-    <>
-      <Head>
-        <title>Antsigarm</title>
-      </Head>
-      <Container maxW={CONT_LG}>
-        <Flex gap={20}>
-          <Box flex={2} py={10}>
-            <FeedPostList />
-          </Box>
-          <Box
-            flex={3}
-            mr={20}
-            display={{ base: 'none', lg: 'block' }}
-            maxW='300px'
-          >
-            <SuggestedUserList />
-          </Box>
-        </Flex>
-      </Container>
-    </>
-  );
+  if (!!authUser) {
+    return (
+      <>
+        <Head>
+          <title>Antsigarm</title>
+        </Head>
+        <Container maxW={CONT_LG}>
+          <Flex gap={20}>
+            <Box flex={2} py={10}>
+              <FeedPostList />
+            </Box>
+            <Box
+              flex={3}
+              mr={20}
+              display={{ base: 'none', lg: 'block' }}
+              maxW='300px'
+            >
+              <SuggestedUserList />
+            </Box>
+          </Flex>
+        </Container>
+      </>
+    );
+  }
+
+  return null;
 }
