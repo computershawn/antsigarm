@@ -1,12 +1,14 @@
+import Navbar from '@/components/ui/Navbar';
 import ProfileHeader from '@/components/ui/Profile/ProfileHeader';
 import ProfilePosts from '@/components/ui/Profile/ProfilePosts';
 import ProfileTabs from '@/components/ui/Profile/ProfileTabs';
 import { Container, Flex } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 export default function Username() {
-  const router = useRouter();
+  // const router = useRouter();
   // return <p>{router.query.username}&apos;s profile</p>
+
   return (
     <Container maxW='1024px' py={5}>
       <Flex

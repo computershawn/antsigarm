@@ -36,8 +36,9 @@ export default function FeedPostList() {
         ))}
 
       {!isLoading &&
-        list.map((post) => (
+        list.map((post, index) => (
           <FeedPost
+            key={index}
             username={post.username}
             img={post.img}
             avatar={post.avatar}

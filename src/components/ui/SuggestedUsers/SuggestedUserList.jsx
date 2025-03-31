@@ -39,8 +39,9 @@ export default function SuggestedUserList() {
           See All
         </Text>
       </Flex>
-      {list.map((user) => (
+      {list.map((user, idx) => (
         <SuggestedUser
+          key={idx}
           name={user.name}
           followers={user.followers}
           avatar={user.avatar}

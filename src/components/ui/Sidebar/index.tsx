@@ -1,20 +1,34 @@
-'use client';
-
 // TODO: UPDATE ICONS
 // TODO: FIX MOBILE LOGO LAYOUT
 
-import {ChakraNextLink as Link} from '../ChakraNextLink';
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
+import { toaster } from '@/components/ui/toaster';
 
-import { Avatar, Box, Flex, Icon, Text, VStack } from '@chakra-ui/react';
-
+import { ChakraNextLink as Link } from '../ChakraNextLink';
 import { Tooltip } from '../tooltip';
-
 import {
   // CreatePostLogo,
   Square,
   AntsigarmLogo,
   AntsigarmMobileLogo,
 } from '../../../assets/constants';
+import { useLogout } from '@/hooks/useLogout';
+import { LuLogOut } from 'react-icons/lu';
+
+const onErrorCallback = (errMsg) => {
+  toaster.create({
+    description: errMsg,
+    type: 'error',
+  });
+};
 
 export default function Sidebar() {
   // TODO: UPDATE THESE ICONS
@@ -50,6 +64,8 @@ export default function Sidebar() {
       link: '/computershawn',
     },
   ];
+
+  const { handleLogout, isLoggingOut } = useLogout({ onErrorCallback });
 
   return (
     <Box
@@ -119,20 +135,20 @@ export default function Sidebar() {
             // @ts-expect-error fix this homie
             positioning={{ placement: 'right' }}
           >
-            <Flex
+            <Button
+              variant='ghost'
+              loading={isLoggingOut}
+              onClick={handleLogout}
               w={{ base: 10, md: 'full' }}
+              justifyContent="flex-start"
               _hover={{ bg: 'white' }}
               borderRadius={6}
               p={2}
               mt='auto'
             >
-              <Link link={'/auth'}>
-                <Icon fontSize='40px'>
-                  <Square />
-                </Icon>
-                <Text display={{ base: 'none', md: 'block' }}>Logout</Text>
-              </Link>
-            </Flex>
+              <LuLogOut />
+              <Text display={{ base: 'none', md: 'block' }}>Logout</Text>
+            </Button>
           </Tooltip>
         </VStack>
       </VStack>

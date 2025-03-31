@@ -1,77 +1,36 @@
-'use client';
+import { useEffect, useState } from 'react';
 
-import { useState } from 'react';
-
-import {
-  Box,
-  Button,
-  Center,
-  Image,
-  Input,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+
+import { Box, Button, Center, Image, Text, VStack } from '@chakra-ui/react';
+import { Toaster } from '@/components/ui/toaster';
+
+import Login from './Login';
+import Signup from './Signup';
+import GoogleAuth from './GoogleAuth';
+
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/firebase/firebase';
 
 export default function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
+  const [authUser] = useAuthState(auth);
   const router = useRouter();
 
-  const [inputs, setInputs] = useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-
-  const handleAuth = () => {
-    if (!inputs.email || !inputs.password || !inputs.confirmPassword) {
-      alert('please complete all of the fields');
-      return;
+  // Navigate to the home page if login or signup is successful
+  useEffect(() => {
+    if (!!authUser) {
+      router.push('/');
     }
-
-    router.push('/');
-  };
-
-  const { email, password, confirmPassword } = inputs;
+  }, [authUser, router]);
 
   return (
     <>
+      <Toaster />
       <Box textAlign='center' border='1px solid gray' borderRadius='lg' p={4}>
         <VStack gap={4}>
           <Image src='/logo.png' h={24} cursor='pointer' alt='App logo' />
-          <Input
-            placeholder='Email'
-            type='email'
-            size='sm'
-            value={email}
-            onChange={(e) => {
-              setInputs({ ...inputs, email: e.target.value });
-            }}
-          />
-          <Input
-            placeholder='Password'
-            type='password'
-            size='sm'
-            value={password}
-            onChange={(e) => {
-              setInputs({ ...inputs, password: e.target.value });
-            }}
-          />
-          {isLogin ? (
-            <Input
-              placeholder='Confirm password'
-              type='password'
-              size='sm'
-              value={confirmPassword}
-              onChange={(e) => {
-                setInputs({ ...inputs, confirmPassword: e.target.value });
-              }}
-            />
-          ) : null}
-
-          <Button w='full' size='sm' onClick={handleAuth}>
-            {isLogin ? 'Log in' : 'Sign up'}
-          </Button>
+          {isLogin ? <Login /> : <Signup />}
 
           <Center my={4} gap={1} w='full'>
             <Box flex={2} h='1px' bg='gray' />
@@ -79,10 +38,7 @@ export default function AuthForm() {
             <Box flex={2} h='1px' bg='gray' />
           </Center>
 
-          <Center cursor='pointer'>
-            <Image src='/google.png' w={5} alt='Google logo' />
-            <Text mx='2'>Log in with Google</Text>
-          </Center>
+          <GoogleAuth />
         </VStack>
       </Box>
       <Box border='1px solid gray' borderRadius='lg' p={4}>
