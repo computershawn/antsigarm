@@ -1,8 +1,10 @@
 import { Button, Container, Flex, Image } from '@chakra-ui/react';
+import { CONT_LG } from '@/constants';
+
 import { ChakraNextLink } from '../ChakraNextLink';
 
 const Navbar = () => (
-  <Container my={4}>
+  <Container my={4} maxW={CONT_LG}>
     <Flex
       w='full'
       justify={{ base: 'center', sm: 'space-between' }}

@@ -1,0 +1,1 @@
+export const CONT_LG = '1024px';

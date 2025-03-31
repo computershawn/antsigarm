@@ -1,14 +1,14 @@
-import { Box, Container, Flex } from '@chakra-ui/react';
-import Head from 'next/head';
-
-import ChildLayout from '@/components/ui/childLayout';
-import ParentLayout from '@/components/ui/parentLayout';
-import FeedPostList from '@/components/ui/FeedPosts/FeedPostList';
-import SuggestedUserList from '@/components/ui/SuggestedUsers/SuggestedUserList';
 import { useEffect } from 'react';
+
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useAuthState } from 'react-firebase-hooks/auth';
+
+import { Box, Container, Flex } from '@chakra-ui/react';
+import FeedPostList from '@/components/ui/FeedPosts/FeedPostList';
+import SuggestedUserList from '@/components/ui/SuggestedUsers/SuggestedUserList';
 import { auth } from '@/firebase/firebase';
+import { CONT_LG } from '@/constants';
 
 export default function Home() {
   const [authUser] = useAuthState(auth);
@@ -25,7 +25,7 @@ export default function Home() {
       <Head>
         <title>Antsigarm</title>
       </Head>
-      <Container maxW='1024px'>
+      <Container maxW={CONT_LG}>
         <Flex gap={20}>
           <Box flex={2} py={10}>
             <FeedPostList />
@@ -43,11 +43,3 @@ export default function Home() {
     </>
   );
 }
-
-Home.getLayout = function getLayout(page) {
-  return (
-    <ParentLayout>
-      <ChildLayout>{page}</ChildLayout>
-    </ParentLayout>
-  );
-};
