@@ -1,31 +1,47 @@
-import { Avatar, Flex, Text } from '@chakra-ui/react';
-import { ChakraNextLink as Link } from '../ChakraNextLink';
+import { useLogout } from '@/hooks/useLogout';
+import { Avatar, Button, Flex, Text } from '@chakra-ui/react';
+
+import { toaster } from '../toaster';
+import useAuthStore from '@/store/authStore';
+import { ChakraNextLink } from '../ChakraNextLink';
+
+const onErrorCallback = (errMsg) => {
+  toaster.create({
+    description: errMsg,
+    type: 'error',
+  });
+};
 
 export default function SuggestedUsersHeader({ username, avatar }) {
+  const { handleLogout, isLoggingOut } = useLogout(onErrorCallback);
+  const authUser = useAuthStore((state) => state.user);
+
+  if (!authUser) return null;
+
   return (
     <Flex justify='space-between' align='center' w='full' my={2}>
       <Flex align='center' gap={2}>
-        <Avatar.Root size='2xs'>
-          <Avatar.Fallback name='shawn j' />
-          <Avatar.Image src='./img1.png' />
-        </Avatar.Root>
+        <ChakraNextLink link={`${authUser.username}`}>
+          <Avatar.Root size='2xs'>
+            <Avatar.Fallback name={authUser.fullName} />
+            <Avatar.Image src={authUser.profilePicUrl} />
+          </Avatar.Root>
+        </ChakraNextLink>
 
-        <Text fontSize={12} fontWeight='bold'>
-          shawn j
-        </Text>
+        <ChakraNextLink link={`${authUser.username}`}>
+          <Text fontSize={12} fontWeight='bold'>
+            {authUser.username}
+          </Text>
+        </ChakraNextLink>
       </Flex>
-      <Link
-        link='/auth'
-        styles={{
-          fontSize: 12,
-          fontWeight: 'medium',
-          color: 'blue',
-          cursor: 'pointer',
-          textDecoration: 'none',
-        }}
+      <Button
+        size='xs'
+        variant='ghost'
+        isLoading={isLoggingOut}
+        onClick={handleLogout}
       >
         Logout
-      </Link>
+      </Button>
     </Flex>
   );
 }

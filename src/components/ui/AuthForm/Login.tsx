@@ -1,11 +1,22 @@
-import { Button, Input } from '@chakra-ui/react';
+import { useLogin } from '@/hooks/useLogin';
+import { Alert, Button, Input } from '@chakra-ui/react';
 import { useState } from 'react';
+import { toaster } from '../toaster';
+
+const onErrorCallback = (errMsg) => {
+  toaster.create({
+    description: errMsg,
+    type: 'error',
+  });
+};
 
 const Login = () => {
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
   });
+
+  const { loading, error, login } = useLogin();
 
   return (
     <>
@@ -27,7 +38,15 @@ const Login = () => {
           setInputs({ ...inputs, password: e.target.value });
         }}
       />
-      <Button w='full' size='sm' onClick={() => console.log('Login')}>
+
+      {error && (
+        <Alert.Root size='sm' status='error' title='Something went wrong'>
+          <Alert.Indicator />
+          <Alert.Title>Something went wrong</Alert.Title>
+        </Alert.Root>
+      )}
+
+      <Button w='full' size='sm' onClick={() => login(inputs, onErrorCallback)}>
         Log in
       </Button>
     </>

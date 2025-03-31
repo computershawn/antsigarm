@@ -1,19 +1,19 @@
 import { usePathname } from 'next/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-import { Box, Center, Spinner } from '@chakra-ui/react';
+import { Box, Center, Flex, Spinner } from '@chakra-ui/react';
 import Sidebar from '@/components/ui/Sidebar';
 import Navbar from '@/components/ui/Navbar';
+import { W_BASE, W_MED } from '@/constants';
 import { auth } from '@/firebase/firebase';
+import { Toaster } from '../toaster';
 
 export default function Layout({ children }) {
   const [user, loading] = useAuthState(auth);
   const pathname = usePathname();
 
-  const W_BASE = 70;
-  const W_MED = 240;
-  const shouldRenderSidebar = pathname !== 'auth' && !!user;
-  const shouldRenderNavbar = !user && !loading && pathname !== 'auth';
+  const shouldRenderSidebar = pathname !== '/auth' && !!user;
+  const shouldRenderNavbar = !user && !loading && pathname !== '/auth';
   const checkingUserIsAuth = !user && loading;
 
   if (checkingUserIsAuth) {
@@ -22,22 +22,25 @@ export default function Layout({ children }) {
 
   return (
     <>
-      {shouldRenderSidebar ? (
-        <Box bg='#f4f4f4' w={{ base: `${W_BASE}px`, md: `${W_MED}px` }}>
-          <Sidebar />
+      <Toaster />
+      <Flex>
+        {shouldRenderSidebar ? (
+          <Box bg='#f4f4f4' w={{ base: `${W_BASE}px`, md: `${W_MED}px` }}>
+            <Sidebar />
+          </Box>
+        ) : null}
+        {shouldRenderNavbar ? <Navbar /> : null}
+        <Box
+          flex={1}
+          mx='auto'
+          w={{
+            base: `calc(100% - ${W_BASE}px)`,
+            md: `calc(100% - ${W_MED}px)`,
+          }}
+        >
+          {children}
         </Box>
-      ) : null}
-      {shouldRenderNavbar ? <Navbar /> : null}
-      <Box
-        flex={1}
-        mx='auto'
-        w={{
-          base: `calc(100% - ${W_BASE}px)`,
-          md: `calc(100% - ${W_MED}px)`,
-        }}
-      >
-        {children}
-      </Box>
+      </Flex>
     </>
   );
 }

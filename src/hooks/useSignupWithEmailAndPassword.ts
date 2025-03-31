@@ -11,6 +11,7 @@ import {
   where,
 } from 'firebase/firestore';
 import useAuthStore from '@/store/authStore';
+import { saveToLocalStorage } from '@/utils';
 
 export const useSignupWithEmailAndPassword = () => {
   const [createUserWithEmailAndPassword, user, loading, error] =
@@ -61,9 +62,7 @@ export const useSignupWithEmailAndPassword = () => {
         };
 
         await setDoc(doc(firestore, 'users', newUser.user.uid), newUserDoc);
-        const canUseLocalStorage = typeof window !== 'undefined';
-        canUseLocalStorage &&
-          localStorage.setItem('antsigarm_user', JSON.stringify(newUserDoc));
+        saveToLocalStorage('antsigarm_user', newUserDoc);
         loginUser(newUserDoc);
       }
     } catch (error) {

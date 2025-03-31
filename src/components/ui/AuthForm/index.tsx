@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { Box, Button, Center, Image, Text, VStack } from '@chakra-ui/react';
-import { Toaster } from '@/components/ui/toaster';
+import { auth } from '@/firebase/firebase';
 
 import Login from './Login';
 import Signup from './Signup';
 import GoogleAuth from './GoogleAuth';
-
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '@/firebase/firebase';
 
 export default function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
@@ -26,7 +24,6 @@ export default function AuthForm() {
 
   return (
     <>
-      <Toaster />
       <Box textAlign='center' border='1px solid gray' borderRadius='lg' p={4}>
         <VStack gap={4}>
           <Image src='/logo.png' h={24} cursor='pointer' alt='App logo' />
@@ -38,7 +35,7 @@ export default function AuthForm() {
             <Box flex={2} h='1px' bg='gray' />
           </Center>
 
-          <GoogleAuth />
+          <GoogleAuth prefix={isLogin ? 'Log in' : 'Sign up'} />
         </VStack>
       </Box>
       <Box border='1px solid gray' borderRadius='lg' p={4}>
