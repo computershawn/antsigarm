@@ -1,8 +1,30 @@
-// @ts-nocheck
-import { Button, Flex, Text, VStack } from '@chakra-ui/react';
+import {
+  Button,
+  CloseButton,
+  Dialog,
+  Flex,
+  Portal,
+  Text,
+  useDisclosure,
+  VStack,
+} from '@chakra-ui/react';
 import { Avatar } from '../avatar';
+import useUserProfileStore from '@/store/userProfileStore';
+import useAuthStore from '@/store/authStore';
+import EditProfile from './EditProfile';
 
 export default function ProfileHeader() {
+  // @ts-ignore
+  const { userProfile } = useUserProfileStore();
+  // @ts-ignore
+  const authUser = useAuthStore((state) => state.user);
+  const visitingOwnProfileAndAuth =
+    authUser && authUser.uid === userProfile.uid;
+  const visitingOtherUserProfileAndAuth =
+    authUser && authUser.uid !== userProfile.uid;
+
+  const { open, onOpen, onClose } = useDisclosure();
+
   return (
     <Flex
       gap={{ base: 4, sm: 10 }}
@@ -10,9 +32,10 @@ export default function ProfileHeader() {
       direction={{ base: 'column', sm: 'row' }}
     >
       <Avatar
-        name='Dan Abramov'
-        src='https://bit.ly/dan-abramov'
-        alt='Dan Abramov'
+        // @ts-ignore
+        name={userProfile.fullName}
+        src={userProfile.profilePicUrl}
+        alt={userProfile.fullName}
       />
       <VStack align='flex-start' gap={2} mx='auto' flex={1}>
         <Flex
@@ -22,39 +45,61 @@ export default function ProfileHeader() {
           align='center'
           w='full'
         >
-          <Text fontSize={{ base: 'sm', md: 'lg' }}>danabramov</Text>
-          <Flex gap={4} align='center' justify='center'>
-            <Button size={{ base: 'xs', md: 'sm' }}>Edit Profile</Button>
-          </Flex>
+          <Text fontSize={{ base: 'sm', md: 'lg' }}>
+            {userProfile.username}
+          </Text>
+          {visitingOwnProfileAndAuth && (
+            // <Flex gap={4} align='center' justify='center'>
+            //   <Button size={{ base: 'xs', md: 'sm' }} onClick={onOpen}>
+            //     Edit Profile
+            //   </Button>
+            // </Flex>
+            <Flex gap={4} align='center' justify='center'>
+              <EditProfile />
+            </Flex>
+          )}
+          {visitingOtherUserProfileAndAuth && (
+            <Flex gap={4} align='center' justify='center'>
+              <Button
+                size={{ base: 'xs', md: 'sm' }}
+                bgColor='blue.500'
+                _hover={{ bgColor: 'blue.600' }}
+              >
+                Follow
+              </Button>
+            </Flex>
+          )}
         </Flex>
         <Flex align='center' gap={{ base: 2, sm: 4 }}>
           <Text fontSize={{ base: 'xs', md: 'sm' }}>
             <Text as='span' fontWeight='bold' mr={1}>
-              4
+              {userProfile.posts.length}
             </Text>
             Posts
           </Text>
           <Text fontSize={{ base: 'xs', md: 'sm' }}>
             <Text as='span' fontWeight='bold' mr={1}>
-              8
+              {userProfile.followers.length}
             </Text>
             Followers
           </Text>
           <Text fontSize={{ base: 'xs', md: 'sm' }}>
             <Text as='span' fontWeight='bold' mr={1}>
-              16
+              {userProfile.following.length}
             </Text>
             Following
           </Text>
         </Flex>
         <Flex align='center' gap={4}>
           <Text fontSize='sm' fontWeight='bold'>
-            danabramov
+            {userProfile.username}
           </Text>
         </Flex>
-        <Flex align='center' gap={4}>
-          <Text fontSize='sm'>He is a cool guy</Text>
-        </Flex>
+        {userProfile.bio && (
+          <Flex align='center' gap={4}>
+            <Text fontSize='sm'>{userProfile.bio}</Text>
+          </Flex>
+        )}
       </VStack>
     </Flex>
   );

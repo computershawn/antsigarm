@@ -1,5 +1,3 @@
-'use client';
-
 import { getFromLocalStorage } from '@/utils';
 import { create } from 'zustand';
 
