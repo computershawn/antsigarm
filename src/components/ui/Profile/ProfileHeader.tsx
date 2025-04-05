@@ -1,13 +1,4 @@
-import {
-  Button,
-  CloseButton,
-  Dialog,
-  Flex,
-  Portal,
-  Text,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
+import { Button, Flex, Text, VStack } from '@chakra-ui/react';
 import { Avatar } from '../avatar';
 import useUserProfileStore from '@/store/userProfileStore';
 import useAuthStore from '@/store/authStore';
@@ -22,8 +13,6 @@ export default function ProfileHeader() {
     authUser && authUser.uid === userProfile.uid;
   const visitingOtherUserProfileAndAuth =
     authUser && authUser.uid !== userProfile.uid;
-
-  const { open, onOpen, onClose } = useDisclosure();
 
   return (
     <Flex
@@ -49,11 +38,6 @@ export default function ProfileHeader() {
             {userProfile.username}
           </Text>
           {visitingOwnProfileAndAuth && (
-            // <Flex gap={4} align='center' justify='center'>
-            //   <Button size={{ base: 'xs', md: 'sm' }} onClick={onOpen}>
-            //     Edit Profile
-            //   </Button>
-            // </Flex>
             <Flex gap={4} align='center' justify='center'>
               <EditProfile />
             </Flex>
@@ -92,7 +76,7 @@ export default function ProfileHeader() {
         </Flex>
         <Flex align='center' gap={4}>
           <Text fontSize='sm' fontWeight='bold'>
-            {userProfile.username}
+            {userProfile.fullName}
           </Text>
         </Flex>
         {userProfile.bio && (

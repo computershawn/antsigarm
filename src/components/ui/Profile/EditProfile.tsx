@@ -10,11 +10,15 @@ import {
   CloseButton,
   Dialog,
   Portal,
+  useDisclosure,
 } from '@chakra-ui/react';
 
 import { Avatar } from '../avatar';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import useAuthStore from '@/store/authStore';
+import usePreviewImage from '@/hooks/usePreviewImage';
+import { toaster } from '../toaster';
+import useEditProfile from '@/hooks/useEditProfile';
 
 export default function EditProfile() {
   const [inputs, setInputs] = useState({
@@ -22,16 +26,47 @@ export default function EditProfile() {
     username: '',
     bio: '',
   });
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onErrorCallback = (errMsg: string) => {
+    toaster.create({
+      description: errMsg,
+      type: 'error',
+    });
+  };
 
   // @ts-ignore
   const authUser = useAuthStore((state) => state.user);
 
-  const handleSaveProfile = () => {
-    console.log('inputs', inputs);
+  const { editProfile, isUpdating } = useEditProfile(onErrorCallback);
+
+  const handleSaveProfile = async () => {
+    try {
+      await editProfile(inputs, selectedFile);
+      setSelectedFile(null);
+      setIsOpen(false);
+    } catch (e) {
+      onErrorCallback(e.message);
+    }
   };
 
+  const initUploadPhoto = () => {
+    if (!!fileRef.current) {
+      fileRef.current?.click();
+    }
+  };
+
+  const fileRef = useRef<HTMLInputElement>(null);
+  const { handleImageChange, setSelectedFile, selectedFile } =
+    usePreviewImage(onErrorCallback);
+
   return (
-    <Dialog.Root placement={'center'} motionPreset='slide-in-bottom'>
+    <Dialog.Root
+      placement={'center'}
+      motionPreset='slide-in-bottom'
+      open={isOpen}
+      onOpenChange={(e) => setIsOpen(e.open)}
+    >
       <Dialog.Trigger asChild>
         <Button size={{ base: 'xs', md: 'sm' }}>Edit Profile</Button>
       </Dialog.Trigger>
@@ -50,13 +85,21 @@ export default function EditProfile() {
                       <Avatar
                         // @ts-ignore
                         name='https://bit.ly/sage-adebayo'
-                        src='https://bit.ly/sage-adebayo'
+                        src={selectedFile || authUser.profilePicUrl}
                         alt='https://bit.ly/sage-adebayo'
                       />
                     </Center>
                     <Center w='full'>
-                      <Button w='full'>Upload Photo</Button>
+                      <Button w='full' onClick={initUploadPhoto}>
+                        Upload Photo
+                      </Button>
                     </Center>
+                    <Input
+                      type='file'
+                      hidden
+                      ref={fileRef}
+                      onChange={handleImageChange}
+                    />
                   </Stack>
                 </Field.Root>
 
@@ -91,7 +134,9 @@ export default function EditProfile() {
               <Dialog.ActionTrigger asChild>
                 <Button variant='outline'>Cancel</Button>
               </Dialog.ActionTrigger>
-              <Button onClick={handleSaveProfile}>Save</Button>
+              <Button onClick={handleSaveProfile} loading={isUpdating}>
+                Save
+              </Button>
             </Dialog.Footer>
             <Dialog.CloseTrigger asChild>
               <CloseButton size='sm' />
