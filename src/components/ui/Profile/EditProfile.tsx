@@ -10,17 +10,16 @@ import {
   CloseButton,
   Dialog,
   Portal,
-  useDisclosure,
 } from '@chakra-ui/react';
 
 import { Avatar } from '../avatar';
-import { useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import useAuthStore from '@/store/authStore';
 import usePreviewImage from '@/hooks/usePreviewImage';
 import { toaster } from '../toaster';
 import useEditProfile from '@/hooks/useEditProfile';
 
-export default function EditProfile() {
+export default function EditProfile({ children }: { children: ReactNode }) {
   const [inputs, setInputs] = useState({
     fullName: '',
     username: '',
@@ -68,7 +67,8 @@ export default function EditProfile() {
       onOpenChange={(e) => setIsOpen(e.open)}
     >
       <Dialog.Trigger asChild>
-        <Button size={{ base: 'xs', md: 'sm' }}>Edit Profile</Button>
+        {/* <Button size={{ base: 'xs', md: 'sm' }}>Edit Profile</Button> */}
+        {children}
       </Dialog.Trigger>
       <Portal>
         <Dialog.Backdrop />

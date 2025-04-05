@@ -39,7 +39,9 @@ export default function ProfileHeader() {
           </Text>
           {visitingOwnProfileAndAuth && (
             <Flex gap={4} align='center' justify='center'>
-              <EditProfile />
+              <EditProfile>
+                <Button size={{ base: 'xs', md: 'sm' }}>Edit Profile</Button>
+              </EditProfile>
             </Flex>
           )}
           {visitingOtherUserProfileAndAuth && (
